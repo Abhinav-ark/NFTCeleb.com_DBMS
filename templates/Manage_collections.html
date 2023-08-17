@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<style>
+    body{
+        background-image: url(../static/img/bg.jpg);
+    }
+</style>    
+<div style="background-color: #99ce77;height: 60px;"><h1 class="text-left" >NFTCeleb.com Creator's Console<a class="btn btn-primary float-right" style="margin: 10px;" href="{{ url_for('nft') }}">Home</a><a class="btn btn-primary float-right" style="margin: 10px;" href="{{ url_for('logout') }}">Logout</a></h1></div>
+
+<div class="container-fluid" style="background-color:rgba(255,255,255,0.6);margin-top: 80px; padding: 20px;border-radius: 20px;margin-left:auto;margin-right: auto;width: fit-content;">
+        <div class="row">
+            <div class="col-sm-2"></div>
+
+            
+            <div class="col-sm-8" >
+<h2 >My Collections <button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">Add Collection</button></h2>
+<h6 ><form action="{{ url_for('searchcollection')}}" method="post"><input type="text" name="searchfor" placeholder="Search.."><button type="submit" class="btn btn-primary" style="height: 25px;font-size: 15px;"><p style="position: relative;bottom: 5px;">🔍</p></button></form></h6>
+{%with messages = get_flashed_messages()%}
+{%if messages%}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{message}}
+</div>
+{%endfor%}
+{%endif%}
+{%endwith%}
+
+
+
+    <!-- Enter New Collection Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+   
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" style="align-content: center;">Add New Collection</h5>    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  
+
+                <div class="modal-body">
+                    
+                    <form action="{{ url_for('insert')}}" method="POST">
+                        <div class="form-group">
+                          <label>Collection id</label>
+                          <input type="text" name="Collection_id" class="form-control" placeholder="Enter Collection id">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Collection name</label>
+                            <input type="text" name="Collection_name" class="form-control"  placeholder="Enter Collection_name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cryptocurrency</label>
+                            <input name="Cryptocurrency" type="text" class="form-control"  placeholder="Enter Cryptocurrency for transactions">
+                          </div>
+
+                        <div class="form-group">
+                           <label>Description</label>
+                           <input name="Description" type="text" class="form-control"  placeholder="Enter Collection Description">
+                         </div>
+                        
+                         <button type="submit" class="btn btn-primary mb-2">Save</button>
+                     
+                      </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID<a href="{{ url_for('sortcolid') }}">↿⇂</a></th>
+            <th scope="col">Name<a href="{{ url_for('sortcolname') }}">↿⇂</a></th>
+            <th scope="col">Cryptocurrency<a href="{{ url_for('sortcrypto') }}">↿⇂</a></th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+        <td>{{row.0}}</td>
+        <td>{{row.1}}</td>
+        <td>{{row.2}}</td>
+        <td>{{row.3}}</td>
+        <td>
+            <a href="/update/{{row.0}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit ✎</a>
+            <a href="/delete/{{ row.0 }}" onclick="return confirm('Are Sure Want To Deleted ?')" class="btn btn-danger btn-sm">Delete 🗑</a>
+            <a href="/view/{{row.0}}" class="btn btn-primary btn-sm">View 👁</a>
+
+        </td>
+    </tr>
+
+
+        <!-- Update Collection Modal -->
+        <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+       
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" style="align-content: center;">Modify Collection</h5>    
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      
+    
+                    <div class="modal-body">
+                        
+                        <form action="{{ url_for('update')}}" method="POST">
+                            <input type="hidden" name="Collection_id" value="{{row.0}}">
+                                
+                            <div class="form-group">
+                                <label>Collection name</label>
+                                <input value="{{row.1}}" type="text" name="Collection_name" class="form-control" placeholder="Enter Collection name">
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Cryptocurrency</label>
+                                <input value="{{row.2}}" name="Cryptocurrency" type="text" class="form-control" placeholder="Enter Cryptocurrency for transactions">
+                              </div>
+                            
+                            <div class="form-group">
+                               <label>Description</label>
+                               <input value="{{row.3}}" name="Description" type="text" class="form-control" placeholder="Enter Collection Description">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success mb-2">Update</button>
+                         
+                          </form>
+    
+    
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+        {% endfor %}
+    </tbody>
+
+</table>
+            </div>
+            
+
+
+            <div class="col-sm-2"></div>
+
+        </div>
+    </div>
+
+ <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+     data = [
+    ["Field","NFT_COUNT"],
+    ["Sports", 34],
+    ["Cinema", 12],
+    ["Music", 30],
+    ["Arts", 43],
+    ["Digital Art",45]
+  ];
+  chartType = "ColumnChart";
+  containerId = "chart1";
+  options = {"title":"Field wise NFT Statistics"};
+    </script>
+    
+    <script src="https://www.gstatic.com/charts/loader.js">   
+    </script>
+    <script>
+      // Script 3 — Where we create and display a chart
+      // Load the Visualization API and the corechart package
+  google.charts.load('current', {'packages':['corechart']});
+  // Set a callback for when the API is loaded
+  google.charts.setOnLoadCallback(drawChart);
+  
+  // This is the callback function which actually draws the chart
+  function drawChart(){
+    google.visualization.drawChart({
+      "containerId": containerId,
+      "dataTable": data,
+      "chartType": chartType,
+      "options": options
+    });
+  }
+    </script>
+  </head>
+  <body>
+    
+    <div style="width:600px; height:300px" id="chart1"></div>
+  </body>
+</html>

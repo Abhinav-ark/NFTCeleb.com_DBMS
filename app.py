@@ -8,10 +8,10 @@ import re
 app = Flask(__name__)
 
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'sql003'
-app.config['MYSQL_DB'] = 'mydb'
+app.config['MYSQL_HOST'] = '<HOST>'
+app.config['MYSQL_USER'] = '<USER>'
+app.config['MYSQL_PASSWORD'] = '<PASSWORD>'
+app.config['MYSQL_DB'] = '<DATABASE>'
 
 
 mysql = MySQL(app)

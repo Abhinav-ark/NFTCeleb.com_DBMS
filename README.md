@@ -38,7 +38,7 @@ You can specify any random ID for the NFT. If the ID is taken already, you'll ge
 
 <h2 align="center">Search</h2>
 <img align="center" src="./Res/search_nft.png"/>
-You can search for Collections by ID, Name and Cryptocurrency and search for NFTs by NFT ID, NFT Name, NFT Type and Token Standard in specific collection.
+You can search for Collections by ID, Name and Cryptocurrency and search for NFTs by NFT ID, NFT Name, NFT Type and Token Standard in specific collection. You can also sort by clicking on the sort button next to each field to toggle between ascending and descending order.
 
 
 # How To Install
